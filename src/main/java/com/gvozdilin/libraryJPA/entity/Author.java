@@ -1,14 +1,22 @@
 package com.gvozdilin.libraryJPA.entity;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
-@Table(name= "author", schema = "public")
+@Table(name = "author", schema = "public")
 @Entity
 public class Author {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String surname; //фамилия
@@ -17,15 +25,23 @@ public class Author {
             CascadeType.PERSIST,
             CascadeType.MERGE
     })
-
-    @JoinTable(name = "authorBook",
-            joinColumns = { @JoinColumn(name = "authorId",
-            referencedColumnName = "id") },
-            inverseJoinColumns = { @JoinColumn(name = "bookId",
-            referencedColumnName = "id") })
-
+    @JoinTable(name = "author_book",
+            joinColumns = {@JoinColumn(name = "authorid",
+                    referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "bookid",
+                    referencedColumnName = "id")})
     private List<Book> books = new ArrayList<>();
 
+    public Author() {
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
+    }
 
     public Long getId() {
         return id;
