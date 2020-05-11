@@ -11,28 +11,8 @@ public class Author {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String surname;
-    private String patronymic;
-
-    public Author() {}
-
-
-    public Author(Long id) {
-        this.id=id;
-    }
-
-    public Author(Long id, String name, String surname, String patronymic) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.patronymic = patronymic;
-    }
-
-    public Author( String name, String surname, String patronymic) {
-        this.name = name;
-        this.surname = surname;
-        this.patronymic = patronymic;
-    }
+    private String surname; //фамилия
+    private String patronymic; //отчество
     @ManyToMany(cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE

@@ -4,19 +4,21 @@ package com.gvozdilin.libraryJPA.entity;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
+@Table(name= "user", schema = "public")
 @Entity
 public class User {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
-    private Long bookId;
     private String username;
     private String password;
     private String name;
     private String surname;
     private String patronymic;
+    private Long quantity; //количество взятых книг
 
 
 
@@ -30,12 +32,11 @@ public class User {
         this.patronymic = patronymic;
     }
 
-    @OneToMany(
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
 
-    private List<Book> books = new ArrayList<>();
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<Book> books;
+
 
     public void setId(Long id) {
         this.id = id;
@@ -85,11 +86,13 @@ public class User {
         this.patronymic = patronymic;
     }
 
-    public Long getBookId() {
-        return bookId;
+    public Long getQuantity() {
+        return quantity;
     }
 
-    public void setBookId(Long bookId) {
-        this.bookId = bookId;
+    public void setQuantity(Long quantity) {
+        this.quantity = quantity;
     }
+
+
 }

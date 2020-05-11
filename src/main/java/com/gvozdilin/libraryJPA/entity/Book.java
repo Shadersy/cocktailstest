@@ -1,8 +1,15 @@
 package com.gvozdilin.libraryJPA.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+
 import javax.persistence.*;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +21,14 @@ public class Book {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private Date yearOfPublishing;
+    private int yearOfPublishing;
+
+    @Version
+    protected int version;
+
+
+    @Column(name = "user_id")
+    private Long userId;
 
     @ManyToMany(cascade = {
             CascadeType.PERSIST,
@@ -40,18 +54,24 @@ public class Book {
         this.name = name;
     }
 
-    public Book(String name, Date yearOfPublishing) {
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false, insertable = false, updatable = false)
+    private User user;
+
+
+    public Book(String name, int yearOfPublishing) {
         this.name = name;
         this.yearOfPublishing = yearOfPublishing;
     }
 
 
 
-    public Date getYearOfPublishing() {
+    public int getYearOfPublishing() {
         return yearOfPublishing;
     }
 
-    public void setYearOfPublishing(Date yearOfPublishing) {
+    public void setYearOfPublishing(int yearOfPublishing) {
         this.yearOfPublishing = yearOfPublishing;
     }
 
@@ -71,5 +91,20 @@ public class Book {
         return name;
     }
 
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
 
 }

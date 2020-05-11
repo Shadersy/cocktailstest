@@ -1,25 +1,31 @@
 package com.gvozdilin.libraryJPA.dto;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BookDto {
 
     private String name;
-    private Date yearOfPublishing;
+    private int yearOfPublishing;
     private List<Long> list = new ArrayList();
 
-    public BookDto(){
+    public BookDto() {
 
     }
 
+    public BookDto(String name) {
+        this.name = name;
+    }
 
-    public BookDto(String name, Date yearOfPublishing, List<Long> list)
-    {
+    public BookDto(String name, int yearOfPublishing) {
+        this.yearOfPublishing = yearOfPublishing;
+        this.name = name;
+    }
+
+    public BookDto(String name, int yearOfPublishing, List<Long> authorsId) {
         this.name = name;
         this.yearOfPublishing = yearOfPublishing;
-        this.list=list;
+        this.list = list;
     }
 
 
@@ -32,7 +38,6 @@ public class BookDto {
     }
 
 
-
     public String getName() {
         return name;
     }
@@ -41,14 +46,13 @@ public class BookDto {
         this.name = name;
     }
 
-    public Date getYearOfPublishing() {
+    public int getYearOfPublishing() {
         return yearOfPublishing;
     }
 
-    public void setYearOfPublishing(Date yearOfPublishing) {
+    public void setYearOfPublishing(int yearOfPublishing) {
         this.yearOfPublishing = yearOfPublishing;
     }
-
 
 
 }
